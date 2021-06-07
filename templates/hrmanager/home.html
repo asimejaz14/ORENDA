@@ -1,0 +1,51 @@
+{% extends 'hrmanager/base.html' %}
+{% load static %}
+{% block content %}
+<div class="col-md-8">
+    <div class="card">
+        <h5 class="card-header">
+            Employees
+            <a class="btn float-right button-col" href="{% url 'create_employee' %}">Create Employee</a>
+        </h5>
+        <div class="card-body">
+            <table class="table table-striped">
+                <thead>
+
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Name</th>
+                    <th scope="col">Email</th>
+                    <th scope="col">CNIC</th>
+                    <th scope="col">Image</th>
+                    <th scope="col">Department</th>
+                    <th scope="col">Date Created</th>
+                    <th scope="col">Update</th>
+                    <th scope="col">Delete</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for employee in employees %}
+                <tr>
+                    <td>{{ forloop.counter }}</td>
+                    <td>{{ employee.name }}</td>
+                    <td>{{ employee.email }}</td>
+                    <td>{{ employee.cnic }}</td>
+
+                    <td>
+                        {% if employee.image %}
+                            <img src="{{ employee.image.url }}">
+                        {% endif %}
+                    </td>
+                    <td>{{ employee.department }}</td>
+                    <td>{{ employee.created_at }}</td>
+                    <td><a href="{% url 'update_employee' employee.id %}"><i class="bi bi-arrow-repeat remove-btn"></i></a></td>
+                    <td><a href="{% url 'delete_employee' employee.id %}"><i class="bi bi-trash remove-btn"></i></a></td>
+                </tr>
+                {% endfor %}
+
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %}
